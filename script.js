@@ -1,6 +1,6 @@
-const rock = 'Rock';
-const paper = 'Paper';
-const scissors = 'Scissors';
+const rock = 'ROCK';
+const paper = 'PAPER';
+const scissors = 'SCISSORS';
 
 
 
@@ -14,32 +14,50 @@ function game(){
         pChoice = getPlayerChoice();
         cChoice = getComputerChoice();
         score += playRound(pChoice, cChoice);
-        console.log(score);
     }
+    console.log("your score = " + score);
 }
 
 function getPlayerChoice(){
-    let playerSelection = '';
+    //check if the player input is valid
+    let keepGoing = true;
+    let choice = prompt("Enter your selection: (Rock, Paper, Scissors");
 
-    playerSelection = prompt("Enter your selection: (Rock, Paper, Scissors");
+    while(keepGoing){
+        while(choice === null || choice === ''){
+            //make sure the user has input a value
+            choice = prompt("DO NOT LEAVE BLANK: (Rock, Paper, Scissors");
+        }
+        //convert input to uppercase to use in rest of code
+        choice = choice.toUpperCase();
 
-    //write code here to validate input is a rock or paper or scissor
+        //check if the choice is ROCK, PAPER, SCISSORS
+        if(choice === rock || choice === paper || choice === scissors){
+            keepGoing = false;
+        }else{
+            choice = prompt("PLEASE ENTER ONLY: (Rock, Paper, Scissors");
+        }
+        //this loop will only break if the user input is valid
+    }
 
-    return playerSelection;
+    return choice;
 }
+
 function playRound(player, computer){
     if(player === computer){
+        console.log("Tie!");
         return 0;
-    }else if (player === rock && computer === scissors){
-        return 1;
-    }else if (player === paper && computer === rock){
-        return 1;
-    }else if (player === scissors && computer === paper){
+    }else if (player === rock && computer === scissors ||
+            player === paper && computer === rock || 
+            player === scissors && computer === paper){
+        console.log("You win!");
         return 1;
     }else {
+        console.log("You lose!");
         return 0;
     }
 }
+
 function getComputerChoice(){
     // Chooses a random number between 1 - 3 then returns answer
     let randomNumber = Math.floor(Math.random() * 3) + 1;
