@@ -2,7 +2,7 @@ const rock = 'ROCK';
 const paper = 'PAPER';
 const scissors = 'SCISSORS';
 
-
+game()
 
 function game(){
     let rounds = 0;
