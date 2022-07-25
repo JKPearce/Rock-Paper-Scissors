@@ -2,60 +2,45 @@ const rock = 'ROCK';
 const paper = 'PAPER';
 const scissors = 'SCISSORS';
 
-game()
+let playerScore = 0;
+let cpuScore = 0;
+
+const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(btn => btn.addEventListener('click', playRound));
+
+const result = document.querySelector('.result');
+const winner = document.querySelector('.winner');
+
+
 
 function game(){
-    let rounds = 0;
-    let score = 0;
-    let pChoice = '';
-    let cChoice = '';
-
-    for(let i = 0; i < 5; i++){
-        pChoice = getPlayerChoice();
-        cChoice = getComputerChoice();
-        score += playRound(pChoice, cChoice);
-    }
-    console.log("your score = " + score);
-}
-
-function getPlayerChoice(){
-    //check if the player input is valid
-    let keepGoing = true;
-    let choice = prompt("Enter your selection: (Rock, Paper, Scissors");
-
-    while(keepGoing){
-        while(choice === null || choice === ''){
-            //make sure the user has input a value
-            choice = prompt("DO NOT LEAVE BLANK: (Rock, Paper, Scissors");
-        }
-        //convert input to uppercase to use in rest of code
-        choice = choice.toUpperCase();
-
-        //check if the choice is ROCK, PAPER, SCISSORS
-        if(choice === rock || choice === paper || choice === scissors){
-            keepGoing = false;
+    if(playerScore > 5 || cpuScore > 5){
+        if(playerScore > 5){
+            winner.textContent = "Player Wins";
         }else{
-            choice = prompt("PLEASE ENTER ONLY: (Rock, Paper, Scissors");
+            winner.textContent = "Computer Wins"
         }
-        //this loop will only break if the user input is valid
     }
-
-    return choice;
 }
 
-function playRound(player, computer){
-    if(player === computer){
-        console.log("Tie!");
-        return 0;
-    }else if (player === rock && computer === scissors ||
-            player === paper && computer === rock || 
-            player === scissors && computer === paper){
-        console.log("You win!");
-        return 1;
+function playRound(e){
+    const cpuChoice = getComputerChoice();
+    const playerChoice = this.classList[1].toUpperCase();
+
+    if(playerChoice === cpuChoice){
+        result.textContent = "Tie";
+    }else if (playerChoice === rock && cpuChoice === scissors ||
+        playerChoice === paper && cpuChoice === rock || 
+        playerChoice === scissors && cpuChoice === paper){
+            result.textContent = "You win!";
+            playerScore++;
     }else {
-        console.log("You lose!");
-        return 0;
+        result.textContent = "You Lose!";
+        cpuScore++;
     }
+
+    game(); //check status of game
 }
 
 function getComputerChoice(){
@@ -73,3 +58,28 @@ function getComputerChoice(){
             return "Did not select properly";
     }
 }
+
+// function getPlayerChoice(){
+//     //check if the player input is valid
+//     let keepGoing = true;
+//     let choice = prompt("Enter your selection: (Rock, Paper, Scissors");
+
+//     while(keepGoing){
+//         while(choice === null || choice === ''){
+//             //make sure the user has input a value
+//             choice = prompt("DO NOT LEAVE BLANK: (Rock, Paper, Scissors");
+//         }
+//         //convert input to uppercase to use in rest of code
+//         choice = choice.toUpperCase();
+
+//         //check if the choice is ROCK, PAPER, SCISSORS
+//         if(choice === rock || choice === paper || choice === scissors){
+//             keepGoing = false;
+//         }else{
+//             choice = prompt("PLEASE ENTER ONLY: (Rock, Paper, Scissors");
+//         }
+//         //this loop will only break if the user input is valid
+//     }
+
+//     return choice;
+// }
