@@ -6,21 +6,29 @@ let playerScore = 0;
 let cpuScore = 0;
 
 const buttons = document.querySelectorAll('.btn');
-
 buttons.forEach(btn => btn.addEventListener('click', playRound));
 
-const result = document.querySelector('.result');
-const winner = document.querySelector('.winner');
+const roundResult = document.querySelector('.result');
+const gameWinner = document.querySelector('.winner');
+const playerBoard = document.querySelector('.player-score');
+const computerBoard = document.querySelector('.computer-score');
 
 
 
 function game(){
-    if(playerScore > 5 || cpuScore > 5){
-        if(playerScore > 5){
-            winner.textContent = "Player Wins";
+    //display current scores
+    playerBoard.textContent = "Player score: " + playerScore;
+    computerBoard.textContent = "Computer score : " + cpuScore;
+
+    //check to see if the score limit has been reached by either player.
+    if(playerScore >= 5 || cpuScore >= 5){
+        //Check to display who actually won
+        if(playerScore >= 5){
+            gameWinner.textContent = "Player Wins";
         }else{
-            winner.textContent = "Computer Wins"
+            gameWinner.textContent = "Computer Wins";
         }
+        //write code to stop game and ask to restart
     }
 }
 
@@ -29,14 +37,14 @@ function playRound(e){
     const playerChoice = this.classList[1].toUpperCase();
 
     if(playerChoice === cpuChoice){
-        result.textContent = "Tie";
+        roundResult.textContent = "Tie";
     }else if (playerChoice === rock && cpuChoice === scissors ||
         playerChoice === paper && cpuChoice === rock || 
         playerChoice === scissors && cpuChoice === paper){
-            result.textContent = "You win!";
+            roundResult.textContent = "You win!";
             playerScore++;
     }else {
-        result.textContent = "You Lose!";
+        roundResult.textContent = "You Lose!";
         cpuScore++;
     }
 
@@ -58,28 +66,3 @@ function getComputerChoice(){
             return "Did not select properly";
     }
 }
-
-// function getPlayerChoice(){
-//     //check if the player input is valid
-//     let keepGoing = true;
-//     let choice = prompt("Enter your selection: (Rock, Paper, Scissors");
-
-//     while(keepGoing){
-//         while(choice === null || choice === ''){
-//             //make sure the user has input a value
-//             choice = prompt("DO NOT LEAVE BLANK: (Rock, Paper, Scissors");
-//         }
-//         //convert input to uppercase to use in rest of code
-//         choice = choice.toUpperCase();
-
-//         //check if the choice is ROCK, PAPER, SCISSORS
-//         if(choice === rock || choice === paper || choice === scissors){
-//             keepGoing = false;
-//         }else{
-//             choice = prompt("PLEASE ENTER ONLY: (Rock, Paper, Scissors");
-//         }
-//         //this loop will only break if the user input is valid
-//     }
-
-//     return choice;
-// }
